@@ -44,10 +44,10 @@ syntaxView.setTheme("monokai");
 
 You can also set the theme when you pass the code arguments:
 ```java
-syntaxView.loadString("monokai", helloWorld, "java");
+syntaxView.loadString(helloWorld, "java", "monokai");
 
 //for a file:
-syntaxView.loadFile("monokai", file);
+syntaxView.loadFile(file, "monokai");
 ```
 
 and set the Progressbar loading spinner to match whichever theme you use:
