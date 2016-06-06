@@ -25,13 +25,12 @@ SyntaxView syntaxView = (SyntaxView) findViewById(R.id.syntaxview);
 Display code string:
 ```java
 String helloWorld = "private static final String helloWorld = \"HelloWorld!\";";
-syntaxView.loadString("monokai-sublime", helloWorld, "java");
+syntaxView.loadString(helloWorld, "java");
 ```
 
 Load file:
 ```java
-boolean detectLanguage = true;
-syntaxView.loadFile("monokai-sublime", file, true);
+syntaxView.loadFile(file);
 ```
 
 #Themes
@@ -41,5 +40,14 @@ All [HighlightJS](https://highlightjs.org/) themes are available:
 String[] themes = syntaxView.themes();
 ...
 syntaxView.setTheme("monokai");
+```
+
+You can also set the theme when you pass the code arguments:
+```java
+String helloWorld = "private static final String helloWorld = \"HelloWorld!\";";
+syntaxView.loadString("monokai", helloWorld, "java");
+
+//for a file:
+syntaxView.loadFile("monokai", file);
 ```
 
