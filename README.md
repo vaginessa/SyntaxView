@@ -33,9 +33,9 @@ Load file:
 syntaxView.loadFile(file);
 ```
 
-#Themes
+#Theming
 
-All [HighlightJS](https://highlightjs.org/) themes are available:
+All [HighlightJS](https://highlightjs.org/) themes are available (the default is a dark theme called 'monokai-sublime'):
 ```java
 String[] themes = syntaxView.themes();
 ...
@@ -44,10 +44,14 @@ syntaxView.setTheme("monokai");
 
 You can also set the theme when you pass the code arguments:
 ```java
-String helloWorld = "private static final String helloWorld = \"HelloWorld!\";";
 syntaxView.loadString("monokai", helloWorld, "java");
 
 //for a file:
 syntaxView.loadFile("monokai", file);
+```
+
+and set the Progressbar loading spinner to match whichever theme you use:
+```java
+syntaxView.setLoadingColor(Color.parseColor("#00ffcc"));
 ```
 
