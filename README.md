@@ -17,25 +17,26 @@ Add to your Android layout xml:
     android:layout_height="match_parent"/>
 ```
 
-Initialise and set theme:
-
+Initialise as usual:
 ```java
 SyntaxView syntaxView = (SyntaxView) findViewById(R.id.syntaxview);
-syntaxView.setup("monokai-sublime");
-syntaxView.setLoadingColor(Color.parseColor("#00ffcc"));
+```
+
+Display code string:
+```java
+String helloWorld = "private static final String helloWorld = \"HelloWorld!\";";
+syntaxView.loadString("monokai-sublime", helloWorld, "java");
 ```
 
 Load file:
-
 ```java
 boolean detectLanguage = true;
-syntaxView.loadFile(file, detectLanguage);
+syntaxView.loadFile("monokai-sublime", file, true);
 ```
 
 #Themes
 
 All [HighlightJS](https://highlightjs.org/) themes are available:
-
 ```java
 String[] themes = syntaxView.themes();
 ...
