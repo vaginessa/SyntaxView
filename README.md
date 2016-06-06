@@ -19,7 +19,7 @@ then add the dependency to your project build.gradle:
 ```groovy
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.github.fiskurgit:SyntaxView:1.0.0'
+    compile 'com.github.fiskurgit:SyntaxView:1.0.1'
 }
 ```
 You can find the latest version in the releases tab above: https://github.com/fiskurgit/SyntaxView/releases
