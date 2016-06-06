@@ -36,7 +36,7 @@ In short:
 
 #Usage
 
-Add the READ_EXTERNAL_STORAGE permission to your manifest.xml and add the [runtime permission to your Activity/Fragment](https://developer.android.com/training/permissions/requesting.html):
+If loading source code from file add the READ_EXTERNAL_STORAGE permission to your manifest.xml and add the [runtime permission to your Activity/Fragment](https://developer.android.com/training/permissions/requesting.html):
 
 ```xml
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
