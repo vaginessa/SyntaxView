@@ -3,6 +3,13 @@ function loadString(content){
     finishedImport();
 }
 
+function loadSnippet(code){
+    console.log("Loading: " + code);
+    document.getElementById("codearea").innerHTML =  code;
+    hljs.highlightBlock(document.getElementById("codearea"));
+    Android.finishedImport();
+}
+
 function addLine(line){
     document.getElementById("codearea").innerHTML += line +'<br>';
 }

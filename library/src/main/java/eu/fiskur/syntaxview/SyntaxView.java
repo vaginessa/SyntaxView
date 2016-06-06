@@ -27,6 +27,8 @@ public class SyntaxView extends RelativeLayout {
 
     private String language = "xml";
     private File file = null;
+    private String code = null;
+    private String theme = "monokai-sublime";
     private boolean detectLanguage = true;
 
     private static final String SYNTAX_MARKUP_TEMPLATE = "<!DOCTYPE html>\n" +
@@ -50,59 +52,59 @@ public class SyntaxView extends RelativeLayout {
     public SyntaxView(Context context) {
         super(context);
         LayoutInflater.from(getContext()).inflate(R.layout.syntax_view, this);
+        setup();
     }
 
     public SyntaxView(Context context, AttributeSet attrs) {
         super(context, attrs);
         LayoutInflater.from(getContext()).inflate(R.layout.syntax_view, this);
+        setup();
     }
 
     public SyntaxView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         LayoutInflater.from(getContext()).inflate(R.layout.syntax_view, this);
+        setup();
     }
 
     public void setObserver(SyntaxViewObserver observer){
         this.observer = observer;
     }
 
-    public void setup(String theme){
-        setup(theme, null);
-    }
-
-    public void setup(String theme, String language){
-        this.language = language;
+    private void setup(){
         webView = (WebView) findViewById(R.id.syntax_web_view);
         webView.loadUrl("about:blank");//clear all
         progress = (ProgressBar) findViewById(R.id.syntax_progress_bar);
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-        webView.setWebViewClient(new WebViewClient(){
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                loadFile(file, detectLanguage);
-            }
-        });
+
+        //To get the page finished loading event:
+        webView.setWebViewClient(new SyntaxWebViewClient());
+
+        //Just to log JS stuff nicely:
         webView.setWebChromeClient(new SyntaxChromeClient());
-        webView.addJavascriptInterface(new WebAppInterface(getContext()), "Android");
 
-        if(theme == null || theme.isEmpty()){
-            theme = "monokai";
-        }
-        if(language == null || language.isEmpty()){
-            language = "xml";
-        }
-        webView.loadDataWithBaseURL("file:///android_asset/", String.format(SYNTAX_MARKUP_TEMPLATE, theme, language), "text/html", "utf-8", null);
+        //So Javascript can talk back to native:
+        webView.addJavascriptInterface(new JSInterface(getContext()), "Android");
+
+        //Does this need to be called yet?
+        webView.loadDataWithBaseURL("file:///android_asset/", String.format(SYNTAX_MARKUP_TEMPLATE, "monokai", "xml"), "text/html", "utf-8", null);
     }
+    private class SyntaxWebViewClient extends WebViewClient{
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            if(file != null){
+                l("onPageFinished() loading file...");
+                postLoadFile(file);
+            }else if(code != null){
+                l("onPageFinished() loading snippet...");
+                webView.loadUrl("javascript:loadSnippet('" + code + "');");
+            }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-
+        }
     }
-
     private class SyntaxChromeClient extends WebChromeClient {
         @Override
         public boolean onConsoleMessage(ConsoleMessage consoleMessage) {
@@ -130,10 +132,10 @@ public class SyntaxView extends RelativeLayout {
         }
     }
 
-    class WebAppInterface {
+    private class JSInterface {
         Context mContext;
 
-        WebAppInterface(Context c) {
+        JSInterface(Context c) {
             mContext = c;
         }
 
@@ -153,12 +155,12 @@ public class SyntaxView extends RelativeLayout {
         }
     }
 
-    public void loadFile(final File file, boolean detectLanguage){
+    private void postLoadFile(final File file){
         if(file == null){
             return;
         }
         this.file = file;
-        this.detectLanguage = detectLanguage;
+        this.code = null;
         if(detectLanguage){
             detectLanguage(file);
         }
@@ -168,6 +170,33 @@ public class SyntaxView extends RelativeLayout {
             progress.setVisibility(View.VISIBLE);
             new FileUtils().loadByLine(file, this);
         }
+    }
+
+    public void loadFile(String theme, File file, boolean detectLanguage){
+        this.theme = theme;
+        loadFile(file ,detectLanguage);
+    }
+
+    public void loadFile(File file, boolean detectLanguage){
+        this.file = file;
+        this.code = null;
+        this.detectLanguage = detectLanguage;
+        webView.loadDataWithBaseURL("file:///android_asset/", String.format(SYNTAX_MARKUP_TEMPLATE, theme, language), "text/html", "utf-8", null);
+
+    }
+
+    public void loadString(String theme, String code, String language){
+        this.theme = theme;
+        loadString(code, language);
+    }
+
+    public void loadString(String code, String language){
+        this.file = null;
+        code = code.replaceAll("\n", "<br>\n");
+        this.code = code;
+        this.language = language;
+        webView.loadDataWithBaseURL("file:///android_asset/", String.format(SYNTAX_MARKUP_TEMPLATE, theme, language), "text/html", "utf-8", null);
+
     }
 
     private void detectLanguage(File file){
@@ -225,21 +254,20 @@ public class SyntaxView extends RelativeLayout {
     }
 
     public void setTheme(String theme){
-        l("Load theme: " + theme);
-        if(file != null) {
+        l("Set theme: " + theme);
+        this.theme = theme;
+        if(file != null || code != null) {
             webView.loadDataWithBaseURL("file:///android_asset/", String.format(SYNTAX_MARKUP_TEMPLATE, theme, language), "text/html", "utf-8", null);
         }
     }
 
     public String[] themes(){
-        l("themes()");
         String[] themes = null;
         try {
             themes = getContext().getAssets().list("styles");
             for(int i = 0 ; i < themes.length ; i++){
                 String theme = themes[i];
                 themes[i] = theme.substring(0, theme.indexOf("."));
-                l("theme: " + themes[i]);
             }
         } catch (IOException e) {
             Log.e(TAG, "Error listing styles: " + e.toString());
