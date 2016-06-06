@@ -11,6 +11,7 @@ import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
@@ -77,7 +78,13 @@ public class SyntaxView extends RelativeLayout {
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
-
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                loadFile(file, detectLanguage);
+            }
+        });
         webView.setWebChromeClient(new SyntaxChromeClient());
         webView.addJavascriptInterface(new WebAppInterface(getContext()), "Android");
 
@@ -147,6 +154,9 @@ public class SyntaxView extends RelativeLayout {
     }
 
     public void loadFile(final File file, boolean detectLanguage){
+        if(file == null){
+            return;
+        }
         this.file = file;
         this.detectLanguage = detectLanguage;
         if(detectLanguage){
@@ -218,7 +228,6 @@ public class SyntaxView extends RelativeLayout {
         l("Load theme: " + theme);
         if(file != null) {
             webView.loadDataWithBaseURL("file:///android_asset/", String.format(SYNTAX_MARKUP_TEMPLATE, theme, language), "text/html", "utf-8", null);
-            loadFile(file, detectLanguage);
         }
     }
 
