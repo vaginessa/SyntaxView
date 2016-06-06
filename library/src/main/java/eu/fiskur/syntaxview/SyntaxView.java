@@ -192,6 +192,7 @@ public class SyntaxView extends RelativeLayout {
 
     public void loadString(String code, String language){
         this.file = null;
+        code = code.replaceAll(" ", "&nbsp;");
         code = code.replaceAll("\n", "<br>\n");
         this.code = code;
         this.language = language;
