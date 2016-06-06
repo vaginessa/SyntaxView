@@ -1,5 +1,5 @@
 # SyntaxView
-Code beautifier for Android
+Code beautifier for Android - a wrapper around a WebView running [HighlightJS](https://highlightjs.org/)
 
 #Usage
 
@@ -26,4 +26,13 @@ boolean detectLanguage = true;
 syntaxView.loadFile(file, detectLanguage);
 ```
 
+#Themes
+
+All [HighlightJS](https://highlightjs.org/) themes are available:
+
+```java
+String[] themes = syntaxView.themes();
+...
+syntaxView.setTheme("monokai");
+```
 
