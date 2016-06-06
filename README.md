@@ -35,7 +35,7 @@ syntaxView.loadFile(file);
 
 #Theming
 
-All [HighlightJS](https://highlightjs.org/) themes are available:
+All [HighlightJS](https://highlightjs.org/) themes are available (the default is a dark theme called 'monokai-sublime'):
 ```java
 String[] themes = syntaxView.themes();
 ...
