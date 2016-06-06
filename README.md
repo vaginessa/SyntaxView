@@ -44,7 +44,6 @@ syntaxView.setTheme("monokai");
 
 You can also set the theme when you pass the code arguments:
 ```java
-String helloWorld = "private static final String helloWorld = \"HelloWorld!\";";
 syntaxView.loadString("monokai", helloWorld, "java");
 
 //for a file:
