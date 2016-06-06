@@ -1,1 +1,1 @@
-include ':library', ':syntaxviewdemo'
+include ':library'
