@@ -33,7 +33,7 @@ Load file:
 syntaxView.loadFile(file);
 ```
 
-#Themes
+#Theming
 
 All [HighlightJS](https://highlightjs.org/) themes are available:
 ```java
@@ -49,5 +49,10 @@ syntaxView.loadString("monokai", helloWorld, "java");
 
 //for a file:
 syntaxView.loadFile("monokai", file);
+```
+
+and set the Progressbar loading spinner to match whichever theme you use:
+```java
+syntaxView.setLoadingColor(Color.parseColor("#00ffcc"));
 ```
 
