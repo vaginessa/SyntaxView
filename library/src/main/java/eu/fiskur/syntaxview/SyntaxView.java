@@ -172,7 +172,7 @@ public class SyntaxView extends RelativeLayout {
         }
     }
 
-    public void loadFile(String theme, File file, boolean detectLanguage){
+    public void loadFile(File file, boolean detectLanguage, String theme){
         this.theme = theme;
         loadFile(file ,detectLanguage);
     }
@@ -185,7 +185,7 @@ public class SyntaxView extends RelativeLayout {
 
     }
 
-    public void loadString(String theme, String code, String language){
+    public void loadString(String code, String language, String theme){
         this.theme = theme;
         loadString(code, language);
     }
