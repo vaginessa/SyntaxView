@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">SyntaxViewDemo</string>
+  <string name="app_name">SyntaxViewDemo</string>
   <string name="action_settings">Settings</string>
 </resources>
