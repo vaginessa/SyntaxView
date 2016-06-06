@@ -1,6 +1,7 @@
 package eu.fiskur.syntaxview;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,10 @@ public class SyntaxView extends RelativeLayout {
     private ProgressBar progress;
     private SyntaxViewObserver observer = null;
     public static final String[] LANGUAGES =new String[]{"objectivec", "javascript", "json", "css", "sql", "python", "markdown", "java", "php", "gradle", "xml", "bash"};
+
+    private String language = "xml";
+    private File file = null;
+    private boolean detectLanguage = true;
 
     private static final String SYNTAX_MARKUP_TEMPLATE = "<!DOCTYPE html>\n" +
             "<html>\n" +
@@ -65,6 +70,7 @@ public class SyntaxView extends RelativeLayout {
     }
 
     public void setup(String theme, String language){
+        this.language = language;
         webView = (WebView) findViewById(R.id.syntax_web_view);
         webView.loadUrl("about:blank");//clear all
         progress = (ProgressBar) findViewById(R.id.syntax_progress_bar);
@@ -141,6 +147,8 @@ public class SyntaxView extends RelativeLayout {
     }
 
     public void loadFile(final File file, boolean detectLanguage){
+        this.file = file;
+        this.detectLanguage = detectLanguage;
         if(detectLanguage){
             detectLanguage(file);
         }
@@ -207,7 +215,11 @@ public class SyntaxView extends RelativeLayout {
     }
 
     public void setTheme(String theme){
-
+        l("Load theme: " + theme);
+        if(file != null) {
+            webView.loadDataWithBaseURL("file:///android_asset/", String.format(SYNTAX_MARKUP_TEMPLATE, theme, language), "text/html", "utf-8", null);
+            loadFile(file, detectLanguage);
+        }
     }
 
     public String[] themes(){
@@ -227,6 +239,9 @@ public class SyntaxView extends RelativeLayout {
         return themes;
     }
 
+    public void setLoadingColor(int color){
+        progress.getIndeterminateDrawable().setColorFilter(color, android.graphics.PorterDuff.Mode.MULTIPLY);
+    }
     private void error(String message){
         if(observer != null){
             observer.error(message);
