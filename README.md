@@ -83,7 +83,7 @@ syntaxView.loadString(helloWorld, "java", "monokai");
 syntaxView.loadFile(file, "monokai");
 ```
 
-and set the Progressbar loading spinner to match whichever theme you use:
+You can also set the ProgressBar loading spinner colour to match whichever theme you use:
 ```java
 syntaxView.setLoadingColor(Color.parseColor("#00ffcc"));
 ```
