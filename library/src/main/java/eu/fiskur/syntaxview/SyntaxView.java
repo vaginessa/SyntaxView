@@ -2,6 +2,7 @@ package eu.fiskur.syntaxview;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -78,6 +79,12 @@ public class SyntaxView extends RelativeLayout {
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+
+        //add pinch/zoom
+        webSettings.setBuiltInZoomControls(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            webSettings.setDisplayZoomControls(false);
+        }
 
         //To get the page finished loading event:
         webView.setWebViewClient(new SyntaxWebViewClient());
