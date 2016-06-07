@@ -1,5 +1,5 @@
 # SyntaxView
-Code beautifier for Android - a wrapper around a WebView running [HighlightJS](https://highlightjs.org/)
+Code beautifier for Android - a wrapper around a WebView running [HighlightJS](https://highlightjs.org/). Written too quickly by accident while writing another app.
 
 #Dependency
 
