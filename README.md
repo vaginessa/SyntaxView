@@ -1,6 +1,8 @@
 # SyntaxView
 Code beautifier for Android - a wrapper around a WebView running [HighlightJS](https://highlightjs.org/). Written too quickly by accident while writing another app.
 
+![Screenshot](/screenshot.png)
+
 #Dependency
 
 Add jitpack.io to your root build.gradle, eg:
