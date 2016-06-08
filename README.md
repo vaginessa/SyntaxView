@@ -30,7 +30,7 @@ More options at jitpack.io: https://jitpack.io/#fiskurgit/SyntaxView
 
 ##Licence
 
-Full licence here: https://github.com/fiskurgit/SyntaxView/blob/master/LICENSE.md
+Full licence here: https://github.com/fiskurgit/SyntaxView/blob/master/LICENSE
 
 In short:
 
