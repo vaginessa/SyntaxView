@@ -1,7 +1,6 @@
 package eu.fiskur.syntaxview;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -93,7 +92,7 @@ public class SyntaxView extends RelativeLayout {
         webView.setWebChromeClient(new SyntaxChromeClient());
 
         //So Javascript can talk back to native:
-        webView.addJavascriptInterface(new JSInterface(getContext()), "Android");
+        webView.addJavascriptInterface(new JSInterface(), "Android");
 
         //Does this need to be called yet?
         webView.loadDataWithBaseURL("file:///android_asset/", String.format(SYNTAX_MARKUP_TEMPLATE, "monokai", "xml"), "text/html", "utf-8", null);
@@ -140,11 +139,6 @@ public class SyntaxView extends RelativeLayout {
     }
 
     private class JSInterface {
-        Context mContext;
-
-        JSInterface(Context c) {
-            mContext = c;
-        }
 
         @JavascriptInterface
         public void showToast(String message) {
@@ -199,9 +193,10 @@ public class SyntaxView extends RelativeLayout {
 
     public void loadString(String code, String language){
         this.file = null;
-        code = code.replaceAll(" ", "&nbsp;");
-        code = code.replaceAll("\n", "<br>\n");
-        this.code = code;
+        String encodedCode = code;
+        encodedCode = encodedCode.replaceAll(" ", "&nbsp;");
+        encodedCode = encodedCode.replaceAll("\n", "<br>\n");
+        this.code = encodedCode;
         this.language = language;
         webView.loadDataWithBaseURL("file:///android_asset/", String.format(SYNTAX_MARKUP_TEMPLATE, theme, language), "text/html", "utf-8", null);
 
