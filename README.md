@@ -1,5 +1,5 @@
 # SyntaxView
-[![Release](https://jitpack.io/v/fiskurgit/SyntaxView.svg)](https://jitpack.io/#fiskurgit/SyntaxView) [![Build Status](https://travis-ci.org/fiskurgit/ChipCloud.svg?branch=master)](https://travis-ci.org/fiskurgit/ChipCloud) [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/fiskurgit/SyntaxView/blob/master/LICENSE)
+[![Release](https://jitpack.io/v/fiskurgit/SyntaxView.svg)](https://jitpack.io/#fiskurgit/SyntaxView) [![Build Status](https://travis-ci.org/fiskurgit/ChipCloud.svg?branch=master)](https://travis-ci.org/fiskurgit/ChipCloud) [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/fiskurgit/SyntaxView/blob/master/LICENSE) [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8e0e7a1f828b4dfc93ee0a1b871958e6)](https://www.codacy.com/app/fiskur/SyntaxView?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=fiskurgit/SyntaxView&amp;utm_campaign=Badge_Grade)
 
 Code beautifier for Android - a wrapper around a WebView running [HighlightJS](https://highlightjs.org/). Written too quickly by accident while writing another app.
 
