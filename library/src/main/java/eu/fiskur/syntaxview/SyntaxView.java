@@ -1,5 +1,6 @@
 package eu.fiskur.syntaxview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -28,7 +29,7 @@ public class SyntaxView extends RelativeLayout {
     private String language = "xml";
     private File file = null;
     private String code = null;
-    private String theme = "monokai-sublime";
+    private String theme = "foundation";
     private boolean detectLanguage = true;
 
     private static final String SYNTAX_MARKUP_TEMPLATE = "<!DOCTYPE html>\n" +
@@ -71,6 +72,7 @@ public class SyntaxView extends RelativeLayout {
         this.observer = observer;
     }
 
+    @SuppressLint({"SetJavaScriptEnabled", "AddJavascriptInterface"})
     private void setup(){
         webView = (WebView) findViewById(R.id.syntax_web_view);
         webView.loadUrl("about:blank");//clear all
@@ -95,7 +97,7 @@ public class SyntaxView extends RelativeLayout {
         webView.addJavascriptInterface(new JSInterface(), "Android");
 
         //Does this need to be called yet?
-        webView.loadDataWithBaseURL("file:///android_asset/", String.format(SYNTAX_MARKUP_TEMPLATE, "monokai", "xml"), "text/html", "utf-8", null);
+        webView.loadDataWithBaseURL("file:///android_asset/", String.format(SYNTAX_MARKUP_TEMPLATE, "foundation", "xml"), "text/html", "utf-8", null);
     }
     private class SyntaxWebViewClient extends WebViewClient{
         @Override
